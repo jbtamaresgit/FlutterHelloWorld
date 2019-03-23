@@ -30,7 +30,8 @@ class MyApp extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               new  Text('Hello Cool World', style:TextStyle(fontWeight: FontWeight.bold)),
-              new  RandomWords()
+              new  RandomWords(),
+              new  ListRandomWords(),
             ],
           ),
         ),
@@ -52,4 +53,41 @@ class RandomWordsState extends State<RandomWords>{
 class RandomWords extends StatefulWidget{
   @override
   RandomWordsState createState() => new RandomWordsState();
+}
+
+class ListRandomWords extends StatefulWidget{
+  @override
+  ListRandomWordsState createState() => new ListRandomWordsState();
+}
+
+class ListRandomWordsState extends State<ListRandomWords>{
+@override
+Widget build(BuildContext context){
+  return buildSuggestions();
+}
+
+  final suggestions = <WordPair>[];
+  final wordStyle = const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, fontStyle: FontStyle.italic);
+  Widget buildSuggestions(){
+    return ListView.builder(
+      padding: const EdgeInsets.all(16.0),
+      itemBuilder: (context, i){
+        if(i.isOdd) return Divider();
+
+        final index = i ~/ 2;
+        if(index >= suggestions.length){
+          suggestions.addAll(generateWordPairs().take(10)); //Generate word pairs from english_words package
+        }
+
+        return buildRow(suggestions[index]);
+      },
+    );
+  }
+
+  Widget buildRow(WordPair pair){
+    return ListTile(
+      title: Text(pair.asPascalCase,
+      style: wordStyle,),
+    );
+  }
 }
