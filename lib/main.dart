@@ -25,17 +25,41 @@ class MyApp extends StatelessWidget {
         appBar: AppBar(
           title: Text('Welcome to Flutter'),
         ),
-        body: Center(
-          child: new Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              new  Text('Hello Cool World', style:TextStyle(fontWeight: FontWeight.bold)),
-              new  RandomWords(),
-              new  ListRandomWords(),
-            ],
-          ),
-        ),
+        body: Container(child: buildContent()) 
+        
+        // Center(
+        //   child: new Column(
+        //     mainAxisAlignment: MainAxisAlignment.center,
+        //     children: <Widget>[
+        //       // new  Text('Hello Cool World', style:TextStyle(fontWeight: FontWeight.bold)),
+        //       // new  RandomWords(),
+        //       ListRandomWords(),
+        //     ],
+        //   ),
+        // ),
       )
+    );
+  }
+}
+
+Widget buildContent(){
+  return Column(
+          children: <Widget>[
+             new OrdinaryWord(),
+             new RandomWords(),
+             new Expanded(child: ListRandomWords())
+            ]);
+}
+
+class OrdinaryWord extends StatefulWidget{
+  @override
+  OrdinaryWordState createState() => new OrdinaryWordState();
+}
+
+class OrdinaryWordState extends State<OrdinaryWord>{
+  @override
+  Widget build(BuildContext context){
+    return new Container(child: Text('Hello Cool World', style:TextStyle(fontWeight: FontWeight.bold))
     );
   }
 }
